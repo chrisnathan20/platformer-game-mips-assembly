@@ -56,7 +56,7 @@ main:
     la $t0, char_pos
     addi $a0, $zero, STARTING_POS
     sw $a0, 0($t0)
-    jal f_draw_rw_one
+    jal f_draw_rw_three
     li $v0, 10 # terminate the program gracefully 
     syscall 
 
@@ -72,6 +72,7 @@ while_set_screen:
 
     jr $ra 
 
+
 f_draw_rw_one: # fetches location passed in $a0
     li $t0, BASE_ADDRESS # $t0 stores the base address for display
     add $t0, $t0, $a0
@@ -81,8 +82,6 @@ f_draw_rw_one: # fetches location passed in $a0
     li $t3, 0x8E0000 # dark red
     li $t4, 0xECC500 # belly yellow
     li $t5, 0xC9A800 # dark yellow
-
-    sw $t1, 0($t0) #alignment check
 
     addi $t0, $t0, -5112
     addi $t6, $t0, 32
@@ -365,19 +364,10 @@ rwone_row17:
     addi $t0, $t0, 512
     
     sw $t3, 0($t0)
-    sw $t1, 4($t0)
     
     sw $t3, 16($t0)
-    sw $t3, 20($t0)
     
 rwone_row18:
-    addi $t0, $t0, 512
-    
-    sw $t3, 0($t0)
-    
-    sw $t3, 16($t0)
-    
-rwone_row19:
     addi $t0, $t0, 512
     
     sw $t3, 0($t0)
@@ -386,25 +376,602 @@ rwone_row19:
     sw $t3, 16($t0)
     sw $t3, 20($t0)
     
+    jr $ra
     
 
+f_draw_rw_two: # fetches location passed in $a0
+    li $t0, BASE_ADDRESS # $t0 stores the base address for display
+    add $t0, $t0, $a0
 
+    li $t1, 0xCA1515 # body red
+    li $t2, 0xD93333 # bright red
+    li $t3, 0x8E0000 # dark red
+    li $t4, 0xECC500 # belly yellow
+    li $t5, 0xC9A800 # dark yellow
 
+    sw $t1, 0($t0) #alignment check
 
+    addi $t0, $t0, -5112
+    addi $t6, $t0, 32
 
+rwtwo_row1:
+    sw $t2, 0($t0)
+    addi $t0, $t0, 4
+    bne $t0, $t6, rwtwo_row1
 
+    addi $t0, $t0, 512
+    sw $t2, 0($t0)
+    sw $t2, 4($t0)
+    addi $t0, $t0, -4
+    addi $t6, $t0, -32
+    
+rwtwo_row2:
+    sw $t1, 0($t0)
+    addi $t0, $t0, -4
+    bne $t0, $t6, rwtwo_row2
 
+    sw $t3, 0($t0)
 
+    addi $t0, $t0, 512
 
+rwtwo_row3:
+    sw $t3, -4($t0)
+    sw $t1, 0($t0)
+    addi $t0, $t0, 4
+    sw $t1, 0($t0)
+    addi $t0, $t0, 4
 
+    li $t7, 0xFFFFFF # temp color: white
+    sw $t7, 0($t0)
+    addi $t0, $t0, 4
+    li $t7, 0x000000 # temp color: black
+    sw $t7, 0($t0)
+    addi $t0, $t0, 4
+    
+    sw $t1, 0($t0)
+    sw $t1, 4($t0)
+    sw $t1, 8($t0)
+    addi $t0, $t0, 12
+    
+    li $t7, 0x2D2D2D # temp color: grey
+    sw $t7, 0($t0)
+    
+    sw $t1, 4($t0)
+    sw $t1, 8($t0)
+    sw $t7, 12($t0)
+    
+rwtwo_row4:
+    addi $t0, $t0, 524
+    
+    addi $t6, $t0, -28
+    
+rwtwo_row4_a:
+    sw $t1, 0($t0)
+    addi $t0, $t0, -4
+    bne $t0, $t6, rwtwo_row4_a
 
+    li $t7, 0x000000 # temp color: black
+    sw $t7, 0($t0)
+    sw $t7, -4($t0)
+    
+    sw $t1, -8($t0)
+    sw $t1, -12($t0)
+    sw $t3, -16($t0)
+    
+rwtwo_row5:
+    addi $t0, $t0, 496
+    sw $t3, -4($t0)
+    
+    addi $t6, $t0, 48
+    
+rwtwo_row5_a:
+    sw $t1, 0($t0)
+    addi $t0, $t0, 4
+    bne $t0, $t6, rwtwo_row5_a
+    
+rwtwo_row6:
+    addi $t0, $t0, 504
+    
+    addi $t6, $t0, -28
+    
+rwtwo_row6_a:
+    sw $t3, 0($t0)
+    addi $t0, $t0, -4
+    bne $t0, $t6, rwtwo_row6_a
+    
+    addi $t6, $t0, -16
+    
+rwtwo_row6_b:
+    sw $t1, 0($t0)
+    addi $t0, $t0, -4
+    bne $t0, $t6, rwtwo_row6_b
+    
+    sw $t3, 0($t0)
+    
+    sw $t2, -28($t0)
+    sw $t2, -32($t0)
+    
+rwtwo_row7:
+    addi $t0, $t0, 512
+    
+    sw $t2, -24($t0)
+    sw $t1, -28($t0)
+    sw $t1, -32($t0)
+    sw $t1, -36($t0)
+    
+    sw $t3, -4($t0)
+    
+    addi $t6, $t0, 20
+    
+rwtwo_row7_a:
+    sw $t1, 0($t0)
+    addi $t0, $t0, 4
+    bne $t0, $t6, rwtwo_row7_a
 
+    sw $t4, 0($t0)
+    sw $t4, 4($t0)
+    
+rwtwo_row8:
+    addi $t0, $t0, 492
+    sw $t2, -20($t0)
+    sw $t1, -24($t0)
+    sw $t1, -28($t0)
+    sw $t3, -32($t0)
+    sw $t2, -36($t0)
+    
+    sw $t3, -4($t0)
+    
+    addi $t6, $t0, 8
+    
+rwtwo_row8_a:
+    sw $t1, 0($t0)
+    addi $t0, $t0, 4
+    bne $t0, $t6, rwtwo_row8_a
 
+    sw $t3, 0($t0)
+    
+    addi $t0, $t0, 4
+    addi $t6, $t0, 8
+    
+rwtwo_row8_b:
+    sw $t1, 0($t0)
+    addi $t0, $t0, 4
+    bne $t0, $t6, rwtwo_row8_b
 
+    sw $t4, 0($t0)
+    sw $t4, 4($t0)
+    
+rwtwo_row9:
+    addi $t0, $t0, 512
+    sw $t4, 0($t0)
+    sw $t4, 4($t0)
+    sw $t4, -4($t0)
+    sw $t3, 8($t0)
+    
+    addi $t0, $t0, -8
+    
+    sw $t3, 0($t0)
+    sw $t3, -4($t0)
+    addi $t0, $t0, -8
+    
+    addi $t6, $t0, -12
+    
+rwtwo_row9_a:
+    sw $t1, 0($t0)
+    addi $t0, $t0, -4
+    bne $t0, $t6, rwtwo_row9_a
+    
+    addi $t6, $t0, -12
+    
+rwtwo_row9_b:
+    sw $t2, 0($t0)
+    addi $t0, $t0, -4
+    bne $t0, $t6, rwtwo_row9_b
+    
+    sw $t1, 0($t0)
+    sw $t1, -4($t0)
+    
+    sw $t3, -8($t0)
+    sw $t3, -16($t0)
 
+rwtwo_row10:
+    addi $t0, $t0, 508
+    sw $t3, -4($t0)
+    
+    addi $t6, $t0, 36
+    
+rwtwo_row10_a:
+    sw $t1, 0($t0)
+    addi $t0, $t0, 4
+    bne $t0, $t6, rwtwo_row10_a
+    
+    sw $t3, 0($t0)
+    sw $t4, 4($t0)
+    sw $t4, 8($t0)
+    sw $t3, 16($t0)
+    
+rwtwo_row11:
+    addi $t0, $t0, 512
+    sw $t4, 4($t0)
+    sw $t4, 8($t0)
+    
+    addi $t6, $t0, -36
+    
+rwtwo_row11_a:
+    sw $t1, 0($t0)
+    addi $t0, $t0, -4
+    bne $t0, $t6, rwtwo_row11_a
+    
+    sw $t3, 0($t0)
+    
+rwtwo_row12:
+    addi $t0, $t0, 520
+    sw $t3, -4($t0)
+    
+    addi $t6, $t0, 32
+    
+rwtwo_row12_a:
+    sw $t1, 0($t0)
+    addi $t0, $t0, 4
+    bne $t0, $t6, rwtwo_row12_a
+    
+    sw $t4, 0($t0)
+    sw $t4, 4($t0)
 
+rwtwo_row13:    
+    addi $t0, $t0, 500
+    sw $t1, 4($t0)
+    sw $t4, 8($t0)
+    sw $t4, 12($t0)
+    sw $t4, 16($t0)
+    
+    addi $t6, $t0, -24
+    
+rwtwo_row13_a:
+    sw $t1, 0($t0)
+    addi $t0, $t0, -4
+    bne $t0, $t6, rwtwo_row13_a
+    
+    sw $t3, 0($t0)
+    
+rwtwo_row14:
+    addi $t0, $t0, 524
+    sw $t3, -4($t0)
+    sw $t3, -8($t0)
+    
+    sw $t1, 0($t0)
+    sw $t1, 4($t0)
+    sw $t1, 8($t0)
+    
+    sw $t1, 12($t0)
+    sw $t5, 16($t0)
+    sw $t5, 20($t0)
+    sw $t5, 24($t0)
+    
+rwtwo_row15:
+    addi $t0, $t0, 512
+    
+    sw $t3, 0($t0)
+    sw $t3, 4($t0)
+    sw $t1, 8($t0)
+    sw $t1, 12($t0)
+    sw $t3, 16($t0)
+    sw $t3, 20($t0)
+    
+rwtwo_row16:
+    addi $t0, $t0, 516
+    
+    sw $t3, 0($t0)
+    sw $t1, 4($t0)
+    sw $t3, 8($t0)
+    sw $t3, 12($t0)
+    
+rwtwo_row17:
+    addi $t0, $t0, 512
+    
+    sw $t3, 0($t0)
+    sw $t3, 8($t0)
+    
+rwtwo_row18:
+    addi $t0, $t0, 512
+    
+    sw $t3, 0($t0)
+    sw $t3, 4($t0)
+    sw $t3, 8($t0)
+    sw $t3, 12($t0)
+    
+    jr $ra
+    
+f_draw_rw_three: # fetches location passed in $a0
+    li $t0, BASE_ADDRESS # $t0 stores the base address for display
+    add $t0, $t0, $a0
 
+    li $t1, 0xCA1515 # body red
+    li $t2, 0xD93333 # bright red
+    li $t3, 0x8E0000 # dark red
+    li $t4, 0xECC500 # belly yellow
+    li $t5, 0xC9A800 # dark yellow
 
+    addi $t0, $t0, -5112
+    addi $t6, $t0, 32
+
+rwthree_row1:
+    sw $t2, 0($t0)
+    addi $t0, $t0, 4
+    bne $t0, $t6, rwthree_row1
+
+    addi $t0, $t0, 512
+    sw $t2, 0($t0)
+    sw $t2, 4($t0)
+    addi $t0, $t0, -4
+    addi $t6, $t0, -32
+    
+rwthree_row2:
+    sw $t1, 0($t0)
+    addi $t0, $t0, -4
+    bne $t0, $t6, rwthree_row2
+
+    sw $t3, 0($t0)
+
+    addi $t0, $t0, 512
+
+rwthree_row3:
+    sw $t3, -4($t0)
+    sw $t1, 0($t0)
+    addi $t0, $t0, 4
+    sw $t1, 0($t0)
+    addi $t0, $t0, 4
+
+    li $t7, 0xFFFFFF # temp color: white
+    sw $t7, 0($t0)
+    addi $t0, $t0, 4
+    li $t7, 0x000000 # temp color: black
+    sw $t7, 0($t0)
+    addi $t0, $t0, 4
+    
+    sw $t1, 0($t0)
+    sw $t1, 4($t0)
+    sw $t1, 8($t0)
+    addi $t0, $t0, 12
+    
+    li $t7, 0x2D2D2D # temp color: grey
+    sw $t7, 0($t0)
+    
+    sw $t1, 4($t0)
+    sw $t1, 8($t0)
+    sw $t7, 12($t0)
+    
+rwthree_row4:
+    addi $t0, $t0, 524
+    
+    addi $t6, $t0, -28
+    
+rwthree_row4_a:
+    sw $t1, 0($t0)
+    addi $t0, $t0, -4
+    bne $t0, $t6, rwthree_row4_a
+
+    li $t7, 0x000000 # temp color: black
+    sw $t7, 0($t0)
+    sw $t7, -4($t0)
+    
+    sw $t1, -8($t0)
+    sw $t1, -12($t0)
+    sw $t3, -16($t0)
+    
+rwthree_row5:
+    addi $t0, $t0, 496
+    sw $t3, -4($t0)
+    
+    addi $t6, $t0, 48
+    
+rwthree_row5_a:
+    sw $t1, 0($t0)
+    addi $t0, $t0, 4
+    bne $t0, $t6, rwthree_row5_a
+    
+rwthree_row6:
+    addi $t0, $t0, 504
+    
+    addi $t6, $t0, -28
+    
+rwthree_row6_a:
+    sw $t3, 0($t0)
+    addi $t0, $t0, -4
+    bne $t0, $t6, rwthree_row6_a
+    
+    addi $t6, $t0, -16
+    
+rwthree_row6_b:
+    sw $t1, 0($t0)
+    addi $t0, $t0, -4
+    bne $t0, $t6, rwthree_row6_b
+    
+    sw $t3, 0($t0)
+    
+    sw $t2, -28($t0)
+    sw $t2, -32($t0)
+    
+rwthree_row7:
+    addi $t0, $t0, 512
+    
+    sw $t2, -24($t0)
+    sw $t1, -28($t0)
+    sw $t1, -32($t0)
+    sw $t1, -36($t0)
+    
+    sw $t3, -4($t0)
+    
+    addi $t6, $t0, 20
+    
+rwthree_row7_a:
+    sw $t1, 0($t0)
+    addi $t0, $t0, 4
+    bne $t0, $t6, rwthree_row7_a
+
+    sw $t4, 0($t0)
+    sw $t4, 4($t0)
+    
+rwthree_row8:
+    addi $t0, $t0, 492
+    sw $t2, -20($t0)
+    sw $t1, -24($t0)
+    sw $t1, -28($t0)
+    sw $t3, -32($t0)
+    sw $t2, -36($t0)
+    
+    sw $t3, -4($t0)
+    
+    addi $t6, $t0, 8
+    
+rwthree_row8_a:
+    sw $t1, 0($t0)
+    addi $t0, $t0, 4
+    bne $t0, $t6, rwthree_row8_a
+
+    sw $t3, 0($t0)
+    
+    addi $t0, $t0, 4
+    addi $t6, $t0, 8
+    
+rwthree_row8_b:
+    sw $t1, 0($t0)
+    addi $t0, $t0, 4
+    bne $t0, $t6, rwthree_row8_b
+
+    sw $t4, 0($t0)
+    sw $t4, 4($t0)
+    
+rwthree_row9:
+    addi $t0, $t0, 512
+    sw $t4, 0($t0)
+    sw $t4, 4($t0)
+    sw $t4, -4($t0)
+    sw $t3, 8($t0)
+    
+    addi $t0, $t0, -8
+    
+    sw $t3, 0($t0)
+    sw $t3, -4($t0)
+    addi $t0, $t0, -8
+    
+    addi $t6, $t0, -12
+    
+rwthree_row9_a:
+    sw $t1, 0($t0)
+    addi $t0, $t0, -4
+    bne $t0, $t6, rwthree_row9_a
+    
+    addi $t6, $t0, -12
+    
+rwthree_row9_b:
+    sw $t2, 0($t0)
+    addi $t0, $t0, -4
+    bne $t0, $t6, rwthree_row9_b
+    
+    sw $t1, 0($t0)
+    sw $t1, -4($t0)
+    
+    sw $t3, -8($t0)
+    sw $t3, -16($t0)
+
+rwthree_row10:
+    addi $t0, $t0, 508
+    sw $t3, -4($t0)
+    
+    addi $t6, $t0, 36
+    
+rwthree_row10_a:
+    sw $t1, 0($t0)
+    addi $t0, $t0, 4
+    bne $t0, $t6, rwthree_row10_a
+    
+    sw $t3, 0($t0)
+    sw $t4, 4($t0)
+    sw $t4, 8($t0)
+    sw $t3, 16($t0)
+    
+rwthree_row11:
+    addi $t0, $t0, 512
+    sw $t4, 4($t0)
+    sw $t4, 8($t0)
+    
+    addi $t6, $t0, -36
+    
+rwthree_row11_a:
+    sw $t1, 0($t0)
+    addi $t0, $t0, -4
+    bne $t0, $t6, rwthree_row11_a
+    
+    sw $t3, 0($t0)
+    
+rwthree_row12:
+    addi $t0, $t0, 520
+    sw $t3, -4($t0)
+    
+    addi $t6, $t0, 32
+    
+rwthree_row12_a:
+    sw $t1, 0($t0)
+    addi $t0, $t0, 4
+    bne $t0, $t6, rwthree_row12_a
+    
+    sw $t4, 0($t0)
+    sw $t4, 4($t0)
+
+rwthree_row13:    
+    addi $t0, $t0, 500
+    sw $t1, 4($t0)
+    sw $t1, 8($t0)
+    sw $t4, 12($t0)
+    sw $t4, 16($t0)
+    
+    addi $t6, $t0, -24
+    
+rwthree_row13_a:
+    sw $t1, 0($t0)
+    addi $t0, $t0, -4
+    bne $t0, $t6, rwthree_row13_a
+    
+    sw $t3, 0($t0)
+    
+rwthree_row14:
+    addi $t0, $t0, 524
+    sw $t3, -4($t0)
+    sw $t3, -8($t0)
+    
+    sw $t1, 0($t0)
+    sw $t1, 4($t0)
+    sw $t1, 8($t0)
+    
+    sw $t1, 12($t0)
+    sw $t1, 16($t0)
+    sw $t5, 20($t0)
+    sw $t5, 24($t0)
+    
+rwthree_row15:
+    addi $t0, $t0, 512
+    
+    sw $t3, 0($t0)
+    sw $t3, 4($t0)
+    sw $t3, 8($t0)
+    sw $t1, 12($t0)
+    sw $t1, 16($t0)
+    
+rwthree_row16:
+    addi $t0, $t0, 520
+    
+    sw $t3, 0($t0)
+    sw $t1, 4($t0)
+    
+rwthree_row17:
+    addi $t0, $t0, 512
+    sw $t3, 0($t0)
+    
+rwthree_row18:
+    addi $t0, $t0, 512
+    sw $t3, 0($t0)
+    sw $t3, 4($t0)
 
     jr $ra
 
