@@ -58,6 +58,7 @@ main_while:
     addi $t1, $t1, 20
     sw $t1, 0($t0)
     jal f_draw_lc
+    #jal f_erase_lc
     
     li $v0, 10 # terminate the program gracefully 
     syscall 
@@ -616,7 +617,81 @@ rc_row8:
 
     jr $ra
     
+ 
+f_erase_rc:
+
+    la $t0, char_pos
+    lw $t0, 0($t0)
+    addi $t0, $t0, BASE_ADDRESS
     
+    li $t1, 0xFFFFFF # white
+    
+erc_row1:
+    addi $t0, $t0 -1280
+    
+    sw $t1, 0($t0)
+    sw $t1, 4($t0)
+    sw $t1, 8($t0)
+    sw $t1, -4($t0)
+    sw $t1, -8($t0)
+    
+erc_row2:
+    addi $t0, $t0 256
+    
+    sw $t1, 0($t0)
+    sw $t1, 4($t0)
+    sw $t1, -4($t0)
+    sw $t1, 8($t0)
+    sw $t1, 12($t0)
+    
+erc_row3:
+    addi $t0, $t0 256
+    
+    sw $t1, 0($t0)
+    sw $t1, -4($t0)
+    sw $t1, -8($t0)
+    sw $t1, 4($t0)
+    sw $t1, 8($t0)
+    sw $t1, 12($t0)
+    
+erc_row4:
+    addi $t0, $t0 256
+    
+    sw $t1, 0($t0)
+    sw $t1, 8($t0)
+    sw $t1, -4($t0)
+    sw $t1, 4($t0)
+    
+erc_row5:
+    addi $t0, $t0 256
+    
+    sw $t1, 0($t0)
+    sw $t1, 4($t0)
+    sw $t1, 8($t0)
+    sw $t1, 12($t0)
+    
+erc_row6:
+    addi $t0, $t0 256
+    
+    sw $t1, 0($t0)
+    sw $t1, 8($t0)
+    sw $t1, 4($t0)
+    
+erc_row7:
+    addi $t0, $t0 256
+    
+    sw $t1, 0($t0)
+    sw $t1, 4($t0)
+    sw $t1, 8($t0)
+    sw $t1, 12($t0)
+    
+erc_row8:
+    addi $t0, $t0 256
+    
+    sw $t1, -4($t0)
+
+    jr $ra 
+       
 f_draw_lc:
 
     la $t0, char_pos
@@ -688,6 +763,81 @@ lc_row7:
     sw $t1, -12($t0)
     
 lc_row8:
+    addi $t0, $t0 256
+    
+    sw $t1, 4($t0)
+
+    jr $ra    
+    
+    
+f_erase_lc:
+
+    la $t0, char_pos
+    lw $t0, 0($t0)
+    addi $t0, $t0, BASE_ADDRESS
+    
+    li $t1, 0xFFFFFF # white
+    
+elc_row1:
+    addi $t0, $t0 -1280
+    
+    sw $t1, 0($t0)
+    sw $t1, 4($t0)
+    sw $t1, 8($t0)
+    sw $t1, -4($t0)
+    sw $t1, -8($t0)
+    
+elc_row2:
+    addi $t0, $t0 256
+    
+    sw $t1, 0($t0)
+    sw $t1, 4($t0)
+    sw $t1, -4($t0)
+    sw $t1, -8($t0)
+    sw $t1, -12($t0)
+    
+elc_row3:
+    addi $t0, $t0 256
+    
+    sw $t1, 0($t0)
+    sw $t1, 4($t0)
+    sw $t1, 8($t0)
+    sw $t1, -4($t0)
+    sw $t1, -8($t0)
+    sw $t1, -12($t0)
+    
+elc_row4:
+    addi $t0, $t0 256
+    
+    sw $t1, 0($t0)
+    sw $t1, -8($t0)
+    sw $t1, -4($t0)
+    sw $t1, 4($t0)
+    
+elc_row5:
+    addi $t0, $t0 256
+    
+    sw $t1, 0($t0)
+    sw $t1, -4($t0)
+    sw $t1, -8($t0)
+    sw $t1, -12($t0)
+    
+elc_row6:
+    addi $t0, $t0 256
+    
+    sw $t1, 0($t0)
+    sw $t1, -8($t0)
+    sw $t1, -4($t0)
+    
+elc_row7:
+    addi $t0, $t0 256
+    
+    sw $t1, 0($t0)
+    sw $t1, -4($t0)
+    sw $t1, -8($t0)
+    sw $t1, -12($t0)
+    
+elc_row8:
     addi $t0, $t0 256
     
     sw $t1, 4($t0)
