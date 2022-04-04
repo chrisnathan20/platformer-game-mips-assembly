@@ -36,6 +36,7 @@
 
 .eqv  BASE_ADDRESS  0x10008000
 .eqv  CHECK_KEYPRESS  0xFFFF0000
+.eqv  HEALTH_BAR_POS 1032
 .eqv  GREEN_DAMAGE 2
 .eqv  ORANGE_DAMAGE 1
       
@@ -95,6 +96,8 @@ test_map3_while:
     sw $t1, 0($t0)
     addi $t0, $t0, 4
     bne $t0, $t2, test_map3_while
+    
+    jal f_draw_health_6
 
 #s0 - save previous char_pos
 #s1 - save previous char_status
@@ -306,7 +309,7 @@ double_j:
 	li $t1, 1
 	sw $t1, 0($t0)
 	la $t0, jump_counter
-	li $t1, 2
+	li $t1, 3
 	sw $t1, 0($t0)
 	j end_if_keypress_happened
 
@@ -318,7 +321,7 @@ j_zero:
 
 	
 	la $t0, jump_counter
-	li $t1, 1
+	li $t1, 2
     sw $t1, 0($t0)
 	
 	
@@ -360,7 +363,7 @@ main_no_platform:
 	
 end_main_while:
 	li $v0 32
-	li $a0 100
+	li $a0 40
 	syscall
 
     j main_while
@@ -1456,3 +1459,215 @@ end_f_draw:
     lw $ra, 0($sp)
     addi $sp, $sp, 4
     jr $ra
+    
+f_draw_health_6:
+	li $t0, HEALTH_BAR_POS
+	addi $t0, $t0, BASE_ADDRESS
+	
+	li $t1, 0xFF0000 #red
+	li $t2, 0xFFFFFF #white
+	li $t3, 0x000000 #black
+	
+	sw $t3, 8($t0)
+	sw $t3, 12($t0)
+	sw $t3, 20($t0)
+	sw $t3, 24($t0)
+	addi $t0, $t0, 512
+	
+	sw $t3, 4($t0)
+	sw $t2, 8($t0)
+	sw $t1, 12($t0)
+	sw $t3, 16($t0)
+	sw $t1, 20($t0)
+	sw $t1, 24($t0)
+	
+	addi $t0, $t0, 28 
+	addi $t4, $t0, 40 
+
+while_h6_one:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h6_one
+	
+	addi $t0, $t0, 4
+	addi $t4, $t0, 40
+
+while_h6_two:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h6_two
+	
+	addi $t0, $t0, 4
+	addi $t4, $t0, 40
+	
+while_h6_three:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h6_three
+	
+	addi $t0, $t0, 356
+	
+	sw $t3, 0($t0)
+	sw $t2, 4($t0)
+	
+	addi $t0, $t0, 8
+	addi $t4, $t0, 24
+	
+while_h6_four:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h6_four
+	
+	sw $t3, 0($t0)
+	sw $t2, 4($t0)
+	addi $t0, $t0, 8
+	addi $t4, $t0, 28
+	
+while_h6_five:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h6_five
+	
+	sw $t3, 0($t0)
+	sw $t2, 4($t0)
+	addi $t0, $t0, 8
+	
+	addi $t4, $t0, 36
+	
+while_h6_six:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h6_six
+	
+	sw $t3, 0($t0)
+	sw $t2, 4($t0)
+	addi $t0, $t0, 8
+	
+	addi $t4, $t0, 36
+	
+while_h6_seven:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h6_seven
+	sw $t3, 0($t0)
+	
+	addi $t0, $t0, 360
+	sw $t3, -4($t0)
+	addi $t4, $t0, 28
+	
+while_h6_eight:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h6_eight
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 120
+	
+while_h6_nine:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h6_nine
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 364
+	
+	sw $t3, -4($t0)
+	addi $t4, $t0, 20
+	
+while_h6_ten:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h6_ten
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 124
+	
+while_h6_elev:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h6_elev
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 364
+	sw $t3, 0($t0)
+	sw $t1, 4($t0)
+	sw $t1, 8($t0)
+	sw $t1, 12($t0)
+	sw $t3, 16($t0)
+	addi $t0, $t0, 20
+	
+	addi $t4, $t0, 40
+	
+while_h6_twel:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h6_twel
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 40
+	
+while_h6_thirt:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h6_thirt
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 40
+	
+while_h6_fourt:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h6_fourt
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 368
+	sw $t3, 0($t0)
+	sw $t1, 4($t0)
+	addi $t0, $t0, 8
+	
+	addi $t4, $t0, 48
+	
+while_h6_fifte:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h6_fifte
+	
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 40
+	
+while_h6_sixte:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h6_sixte
+	
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 40
+	
+while_h6_sevent:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h6_sevent
+	addi $t0, $t0, 372
+	sw $t3, 0($t0)
+	
+	
+	
+	jr $ra
+	
+
+
+
+
+
+
+	
