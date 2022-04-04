@@ -43,13 +43,15 @@
 
     padding:	.space	36000   #Empty space to prevent game data from being overwritten due to large bitmap size
 
-    char_pos: .word	47352
+    char_pos: .word	40940
 
     char_status: .word 1 #1 for right walk/stand, 2 for left walk/stand, 3 for right climb, 4 for left stand
     
     jump_counter: .word -1
     
-    gravity_counter: .word -1
+    djump_counter: .word -1
+    
+    gravity_counter: .word 0
 
     sprite_walk_status: .word 1 #used to toggle between sprites
 
@@ -64,26 +66,194 @@ main:
     li $t0, BASE_ADDRESS # $t0 stores the base address for display
     li $t1, 0x000000
     
-    addi $t0, $t0, 57344
-	addi $t2, $t0, 512
+    addi $t0, $t0, 48640
+	addi $t2, $t0, 7680
 
 test_map_while:    
     sw $t1, 0($t0)
     addi $t0, $t0, 4
     bne $t0, $t2, test_map_while
+    
+    li $t0, BASE_ADDRESS # $t0 stores the base address for display
+    li $t1, 0x000000
+    
+    addi $t0, $t0, 40960
+	addi $t2, $t0, 64
+
+test_map2_while:    
+    sw $t1, 0($t0)
+    addi $t0, $t0, 4
+    bne $t0, $t2, test_map2_while
+    
+	li $t0, BASE_ADDRESS # $t0 stores the base address for display
+    li $t1, 0x000000
+    
+    addi $t0, $t0, 41088
+	addi $t2, $t0, 64
+
+test_map3_while:    
+    sw $t1, 0($t0)
+    addi $t0, $t0, 4
+    bne $t0, $t2, test_map3_while
 
 #s0 - save previous char_pos
 #s1 - save previous char_status
 
-#s7 - counter to limit while loop
+#s6 - counter limit for while loops that call other functions
+#s7 - counter for while loops calling other functions
 
 main_while:
+
     la $t0, char_pos
     lw $s0, 0($t0)
     
     la $t0, char_status
     lw $s1, 0($t0)
     
+if_mid_jump:    
+    la $t0, jump_counter
+    lw $t1, 0($t0)
+    
+    ble $t1, 0, do_gravity #FIX THIS to gravity check
+    
+j_one:    
+    bne $t1, 1, j_two
+    li $s7, 0
+    
+while_jump_one:
+	jal f_move_up
+	addi $s7, $s7, 1
+	bne $s7, 4, while_jump_one
+	
+	j end_if_mid_jump
+    
+j_two:
+	bne $t1, 2, j_three
+    li $s7, 0
+    
+while_jump_two:
+	jal f_move_up
+	addi $s7, $s7, 1
+	bne $s7, 3, while_jump_two
+	
+	j end_if_mid_jump
+	
+j_three:
+	bne $t1, 3, j_four
+    li $s7, 0
+    
+while_jump_three:
+	jal f_move_up
+	addi $s7, $s7, 1
+	bne $s7, 3, while_jump_three
+	
+	j end_if_mid_jump
+	
+j_four:
+	bne $t1, 4, j_five
+    li $s7, 0
+    
+while_jump_four:
+	jal f_move_up
+	addi $s7, $s7, 1
+	bne $s7, 2, while_jump_four
+	
+	j end_if_mid_jump
+	
+j_five:
+	bne $t1, 5, j_six
+    li $s7, 0
+    
+while_jump_five:
+	jal f_move_up
+	addi $s7, $s7, 1
+	bne $s7, 2, while_jump_five
+	
+	j end_if_mid_jump
+	
+j_six:
+	bne $t1, 6, j_seven
+    li $s7, 0
+    
+while_jump_six:
+	jal f_move_up
+	addi $s7, $s7, 1
+	bne $s7, 1, while_jump_six
+	
+	j end_if_mid_jump
+	
+j_seven:
+	bne $t1, 7, j_eight
+    li $s7, 0
+    
+while_jump_seven:
+	jal f_move_up
+	addi $s7, $s7, 1
+	bne $s7, 1, while_jump_seven
+	
+	j end_if_mid_jump
+	
+j_eight:
+	bne $t1, 8, end_if_mid_jump
+    li $s7, 0
+    
+while_jump_eight:
+	jal f_move_up
+	addi $s7, $s7, 1
+	bne $s7, 1, while_jump_eight
+	
+	j end_if_mid_jump
+
+end_if_mid_jump:   
+	la $t0, jump_counter
+    lw $t1, 0($t0)
+    addi $t1, $t1, 1
+    bne $t1 , 12, end_jump
+    li $t1, -1
+end_jump:    
+    sw $t1, 0($t0)
+    j key_check
+    
+do_gravity:
+	la $t0, gravity_counter
+    lw $t1, 0($t0)
+    
+g_one:
+	bgt $t1, 1, g_three
+	jal f_move_down	
+
+	j end_do_gravity
+	
+g_three:
+	bgt $t1, 3, g_five
+	jal f_move_down
+	jal f_move_down	
+	
+	j end_do_gravity
+	
+g_five:
+	bgt $t1, 5, g_terminal
+	jal f_move_down
+	jal f_move_down
+	jal f_move_down	
+	
+	j end_do_gravity
+	
+g_terminal:
+	jal f_move_down
+	jal f_move_down
+	jal f_move_down	
+	jal f_move_down	
+	
+	
+end_do_gravity:
+
+	la $t0, gravity_counter
+    lw $t1, 0($t0)
+    addi $t1, $t1, 1
+    sw $t1, 0($t0)
+    
+key_check:
     li $t9, 0xFFFF0000  
 	lw $t8, 0($t9) 
 	bne $t8, 1, end_if_keypress_happened  
@@ -91,29 +261,67 @@ main_while:
 	lw $t2, 4($t9) # this assumes $t9 is set to 0xfff0000 from before 
 
 if_p_pressed:
-	bne $t2, 112, if_a_pressed
+	bne $t2, 112, end_if_p_pressed
 	j END
+end_if_p_pressed:
 
+	beq $t2, 100, if_a_pressed   # ASCII code of 'a' is 0x61 or 97 in decimal
+	beq $t2, 115, if_a_pressed
+	j end_if_a_pressed
 if_a_pressed:
-	bne $t2, 97, if_d_pressed   # ASCII code of 'a' is 0x61 or 97 in decimal 
 	la $t0, char_status
 	li $t1, 2
     sw $t1, 0($t0)
 	jal f_move_left
 	jal f_move_left
+	jal f_move_left
 	j end_if_keypress_happened
 
+end_if_a_pressed:
+	beq $t2, 107, if_d_pressed
+	beq $t2, 108, if_d_pressed
+	j if_jump_pressed  
 if_d_pressed:
-	bne $t2, 100, if_w_pressed   # ASCII code of 'a' is 0x61 or 97 in decimal 
 	la $t0, char_status
 	li $t1, 1
     sw $t1, 0($t0)
 	jal f_move_right
 	jal f_move_right
+	jal f_move_right
 	j end_if_keypress_happened
 
-if_w_pressed:
+if_jump_pressed:
+	bne $t2, 32, end_if_keypress_happened
+	la $t0, jump_counter
+	lw $t1, 0($t0)
+	beq $t1, 0, j_zero
+	
+	la $t0, djump_counter
+	lw $t1, 0($t0)
+	beq $t1, 0, double_j
+	j end_if_keypress_happened
+	
+double_j:
+	la $t0, djump_counter
+	li $t1, 1
+	sw $t1, 0($t0)
+	la $t0, jump_counter
+	li $t1, 2
+	sw $t1, 0($t0)
+	j end_if_keypress_happened
 
+j_zero:
+	jal f_move_up
+	jal f_move_up
+	jal f_move_up
+	jal f_move_up
+
+	
+	la $t0, jump_counter
+	li $t1, 1
+    sw $t1, 0($t0)
+	
+	
 end_if_keypress_happened:
 
 
@@ -127,9 +335,32 @@ if_change_char_pos:
     jal f_draw_char
     
 end_if_change_char_pos:
+    	
+check_platform_below:
+	jal f_on_platform
+	bne $v0, 1, main_no_platform
+	la $t0, gravity_counter
+	li $t1, 0
+    sw $t1, 0($t0)
+    la $t0, jump_counter
+	li $t1, 0
+    sw $t1, 0($t0)
+    la $t0, djump_counter
+	li $t1, 0
+    sw $t1, 0($t0)
+    j end_main_while
     
-    li $v0 32
-	li $a0 40
+main_no_platform:
+	la $t0, jump_counter
+	lw $t1, 0($t0)
+	bne $t1, 0, end_main_while
+	
+	li $t1, -1
+    sw $t1, 0($t0)
+	
+end_main_while:
+	li $v0 32
+	li $a0 100
 	syscall
 
     j main_while
@@ -307,7 +538,7 @@ end_if_on_platform_white_orange:
 	bne $t0, $t1, while_f_on_platform     
 	
 
-	li $v0, 0 #set v0 to 1 if not on a platform
+	li $v0, 0 #set v0 to 0 if not on a platform
 	jr $ra	
 
 ### DRAWING FUNCTIONS ###
@@ -330,7 +561,7 @@ f_draw_rw:
     lw $t1, 0($t0)
     addi $t2, $t1, 1
     sw $t2, 0($t0)
-    li $t0, 2
+    li $t0, 3
     
     addi $sp, $sp, -4
     sw $ra, 0($sp)
@@ -348,7 +579,7 @@ end_if_f_draw_rw:
 	
 	la $t0, sprite_walk_status
     lw $t1, 0($t0)
-    li $t0, 4
+    li $t0, 6
     bne $t1, $t0, end_f_draw_rw
     la $t0, sprite_walk_status
     li $t1, 0
@@ -364,7 +595,7 @@ f_draw_lw:
     lw $t1, 0($t0)
     addi $t2, $t1, 1
     sw $t2, 0($t0)
-    li $t0, 2
+    li $t0, 3
     
     addi $sp, $sp, -4
     sw $ra, 0($sp)
@@ -382,7 +613,7 @@ end_if_f_draw_lw:
 	
 	la $t0, sprite_walk_status
     lw $t1, 0($t0)
-    li $t0, 4
+    li $t0, 6
     bne $t1, $t0, end_f_draw_lw
     la $t0, sprite_walk_status
     li $t1, 0
