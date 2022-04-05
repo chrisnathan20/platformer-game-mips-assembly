@@ -67,7 +67,7 @@ main:
     li $t0, BASE_ADDRESS # $t0 stores the base address for display
     li $t1, 0x000000
     
-    addi $t0, $t0, 48640
+    addi $t0, $t0, 57856
 	addi $t2, $t0, 7680
 
 test_map_while:    
@@ -89,7 +89,7 @@ test_map2_while:
 	li $t0, BASE_ADDRESS # $t0 stores the base address for display
     li $t1, 0x000000
     
-    addi $t0, $t0, 41088
+    addi $t0, $t0, 47232
 	addi $t2, $t0, 64
 
 test_map3_while:    
@@ -97,7 +97,7 @@ test_map3_while:
     addi $t0, $t0, 4
     bne $t0, $t2, test_map3_while
     
-    jal f_draw_health_6
+    jal f_draw_health_1
 
 #s0 - save previous char_pos
 #s1 - save previous char_status
@@ -1650,7 +1650,6 @@ while_h6_sixte:
 	bne $t0, $t4, while_h6_sixte
 	
 	addi $t0, $t0, 4
-	
 	addi $t4, $t0, 40
 	
 while_h6_sevent:
@@ -1660,14 +1659,1210 @@ while_h6_sevent:
 	addi $t0, $t0, 372
 	sw $t3, 0($t0)
 	
+	jr $ra
+
+
+f_draw_health_5:
+	li $t0, HEALTH_BAR_POS
+	addi $t0, $t0, BASE_ADDRESS
 	
+	li $t1, 0xFF0000 #red
+	li $t2, 0xFFFFFF #white
+	li $t3, 0x000000 #black
+	
+	sw $t3, 8($t0)
+	sw $t3, 12($t0)
+	sw $t3, 20($t0)
+	sw $t3, 24($t0)
+	addi $t0, $t0, 512
+	
+	sw $t3, 4($t0)
+	sw $t2, 8($t0)
+	sw $t1, 12($t0)
+	sw $t3, 16($t0)
+	sw $t1, 20($t0)
+	sw $t1, 24($t0)
+	
+	addi $t0, $t0, 28 
+	addi $t4, $t0, 40 
+
+while_h5_one:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h5_one
+	
+	addi $t0, $t0, 4
+	addi $t4, $t0, 40
+
+while_h5_two:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h5_two
+	
+	addi $t0, $t0, 4
+	addi $t4, $t0, 40
+	
+while_h5_three:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h5_three
+	
+	addi $t0, $t0, 356
+	
+	sw $t3, 0($t0)
+	sw $t2, 4($t0)
+	
+	addi $t0, $t0, 8
+	addi $t4, $t0, 24
+	
+while_h5_four:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h5_four
+	
+	sw $t3, 0($t0)
+	sw $t2, 4($t0)
+	addi $t0, $t0, 8
+	addi $t4, $t0, 28
+	
+while_h5_five:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h5_five
+	
+	sw $t3, 0($t0)
+	sw $t2, 4($t0)
+	addi $t0, $t0, 8
+	
+	addi $t4, $t0, 36
+	
+while_h5_six:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h5_six
+	
+	sw $t3, 0($t0)
+	sw $t2, 4($t0)
+	addi $t0, $t0, 8
+	
+	addi $t4, $t0, 16
+	
+while_h5_seven:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h5_seven
+	
+	addi $t4, $t0, 20
+	
+while_h5_seven1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h5_seven1
+	sw $t3, 0($t0)
+	
+	addi $t0, $t0, 360
+	sw $t3, -4($t0)
+	addi $t4, $t0, 28
+	
+while_h5_eight:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h5_eight
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 100
+	
+while_h5_nine:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h5_nine
+	
+	addi $t4, $t0, 20
+	
+while_h5_nine1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h5_nine1
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 364
+	
+	sw $t3, -4($t0)
+	addi $t4, $t0, 20
+	
+while_h5_ten:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h5_ten
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 104
+	
+while_h5_elev:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h5_elev
+	
+	addi $t4, $t0, 20
+	
+while_h5_elev1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h5_elev1
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 364
+	sw $t3, 0($t0)
+	sw $t1, 4($t0)
+	sw $t1, 8($t0)
+	sw $t1, 12($t0)
+	sw $t3, 16($t0)
+	addi $t0, $t0, 20
+	
+	addi $t4, $t0, 40
+	
+while_h5_twel:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h5_twel
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 40
+	
+while_h5_thirt:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h5_thirt
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 20
+	
+while_h5_fourt:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h5_fourt
+	
+	addi $t4, $t0, 20
+	
+while_h5_fourt1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h5_fourt1
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 368
+	sw $t3, 0($t0)
+	sw $t1, 4($t0)
+	addi $t0, $t0, 8
+	
+	addi $t4, $t0, 48
+	
+while_h5_fifte:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h5_fifte
+	
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 40
+	
+while_h5_sixte:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h5_sixte
+	
+	addi $t0, $t0, 4
+	addi $t4, $t0, 40
+	
+while_h5_sevent:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h5_sevent
+	addi $t0, $t0, 372
+	sw $t3, 0($t0)
 	
 	jr $ra
 	
 
-
-
-
-
-
+f_draw_health_4:
+	li $t0, HEALTH_BAR_POS
+	addi $t0, $t0, BASE_ADDRESS
 	
+	li $t1, 0xFF0000 #red
+	li $t2, 0xFFFFFF #white
+	li $t3, 0x000000 #black
+	
+	sw $t3, 8($t0)
+	sw $t3, 12($t0)
+	sw $t3, 20($t0)
+	sw $t3, 24($t0)
+	addi $t0, $t0, 512
+	
+	sw $t3, 4($t0)
+	sw $t2, 8($t0)
+	sw $t1, 12($t0)
+	sw $t3, 16($t0)
+	sw $t1, 20($t0)
+	sw $t1, 24($t0)
+	
+	addi $t0, $t0, 28 
+	addi $t4, $t0, 40 
+
+while_h4_one:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h4_one
+	
+	addi $t0, $t0, 4
+	addi $t4, $t0, 40
+
+while_h4_two:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h4_two
+	
+	addi $t0, $t0, 4
+	addi $t4, $t0, 40
+	
+while_h4_three:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h4_three
+	
+	addi $t0, $t0, 356
+	
+	sw $t3, 0($t0)
+	sw $t2, 4($t0)
+	
+	addi $t0, $t0, 8
+	addi $t4, $t0, 24
+	
+while_h4_four:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h4_four
+	
+	sw $t3, 0($t0)
+	sw $t2, 4($t0)
+	addi $t0, $t0, 8
+	addi $t4, $t0, 28
+	
+while_h4_five:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h4_five
+	
+	sw $t3, 0($t0)
+	sw $t2, 4($t0)
+	addi $t0, $t0, 8
+	
+	addi $t4, $t0, 36
+	
+while_h4_six:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h4_six
+	
+	sw $t3, 0($t0)
+	sw $t2, 4($t0)
+	addi $t0, $t0, 8
+	
+	addi $t4, $t0, 16
+	
+while_h4_seven:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h4_seven
+	
+	addi $t4, $t0, 20
+	
+while_h4_seven1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h4_seven1
+	sw $t3, 0($t0)
+	
+	addi $t0, $t0, 360
+	sw $t3, -4($t0)
+	addi $t4, $t0, 28
+	
+while_h4_eight:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h4_eight
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 76
+	
+while_h4_nine:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h4_nine
+	
+	addi $t4, $t0, 44
+	
+while_h4_nine1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h4_nine1
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 364
+	
+	sw $t3, -4($t0)
+	addi $t4, $t0, 20
+	
+while_h4_ten:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h4_ten
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 80
+	
+while_h4_elev:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h4_elev
+	
+	addi $t4, $t0, 44
+	
+while_h4_elev1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h4_elev1
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 364
+	sw $t3, 0($t0)
+	sw $t1, 4($t0)
+	sw $t1, 8($t0)
+	sw $t1, 12($t0)
+	sw $t3, 16($t0)
+	addi $t0, $t0, 20
+	
+	addi $t4, $t0, 40
+	
+while_h4_twel:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h4_twel
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 40
+	
+while_h4_thirt:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h4_thirt
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 20
+	
+while_h4_fourt:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h4_fourt
+	
+	addi $t4, $t0, 20
+	
+while_h4_fourt1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h4_fourt1
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 368
+	sw $t3, 0($t0)
+	sw $t1, 4($t0)
+	addi $t0, $t0, 8
+	
+	addi $t4, $t0, 48
+	
+while_h4_fifte:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h4_fifte
+	
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 40
+	
+while_h4_sixte:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h4_sixte
+	
+	addi $t0, $t0, 4
+	addi $t4, $t0, 40
+	
+while_h4_sevent:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h4_sevent
+	addi $t0, $t0, 372
+	sw $t3, 0($t0)
+	
+	jr $ra
+	
+	
+f_draw_health_3:
+	li $t0, HEALTH_BAR_POS
+	addi $t0, $t0, BASE_ADDRESS
+	
+	li $t1, 0xFF0000 #red
+	li $t2, 0xFFFFFF #white
+	li $t3, 0x000000 #black
+	
+	sw $t3, 8($t0)
+	sw $t3, 12($t0)
+	sw $t3, 20($t0)
+	sw $t3, 24($t0)
+	addi $t0, $t0, 512
+	
+	sw $t3, 4($t0)
+	sw $t2, 8($t0)
+	sw $t1, 12($t0)
+	sw $t3, 16($t0)
+	sw $t1, 20($t0)
+	sw $t1, 24($t0)
+	
+	addi $t0, $t0, 28 
+	addi $t4, $t0, 40 
+
+while_h3_one:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h3_one
+	
+	addi $t0, $t0, 4
+	addi $t4, $t0, 40
+
+while_h3_two:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h3_two
+	
+	addi $t0, $t0, 4
+	addi $t4, $t0, 40
+	
+while_h3_three:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h3_three
+	
+	addi $t0, $t0, 356
+	
+	sw $t3, 0($t0)
+	sw $t2, 4($t0)
+	
+	addi $t0, $t0, 8
+	addi $t4, $t0, 24
+	
+while_h3_four:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h3_four
+	
+	sw $t3, 0($t0)
+	sw $t2, 4($t0)
+	addi $t0, $t0, 8
+	addi $t4, $t0, 28
+	
+while_h3_five:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h3_five
+	
+	sw $t3, 0($t0)
+	sw $t2, 4($t0)
+	addi $t0, $t0, 8
+	
+	addi $t4, $t0, 16
+	
+while_h3_six:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h3_six
+	
+	addi $t4, $t0, 20
+	
+while_h3_six1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h3_six1
+	
+	sw $t3, 0($t0)
+	sw $t2, 4($t0)
+	addi $t0, $t0, 8
+	
+	addi $t4, $t0, 16
+	
+while_h3_seven:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h3_seven
+	
+	addi $t4, $t0, 20
+	
+while_h3_seven1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h3_seven1
+	sw $t3, 0($t0)
+	
+	addi $t0, $t0, 360
+	sw $t3, -4($t0)
+	addi $t4, $t0, 28
+	
+while_h3_eight:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h3_eight
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 56
+	
+while_h3_nine:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h3_nine
+	
+	addi $t4, $t0, 64
+	
+while_h3_nine1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h3_nine1
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 364
+	
+	sw $t3, -4($t0)
+	addi $t4, $t0, 20
+	
+while_h3_ten:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h3_ten
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 60
+	
+while_h3_elev:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h3_elev
+	
+	addi $t4, $t0, 64
+	
+while_h3_elev1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h3_elev1
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 364
+	sw $t3, 0($t0)
+	sw $t1, 4($t0)
+	sw $t1, 8($t0)
+	sw $t1, 12($t0)
+	sw $t3, 16($t0)
+	addi $t0, $t0, 20
+	
+	addi $t4, $t0, 40
+	
+while_h3_twel:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h3_twel
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 20
+	
+while_h3_thirt:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h3_thirt
+	
+	addi $t4, $t0, 20
+	
+while_h3_thirt1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h3_thirt1
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 20
+	
+while_h3_fourt:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h3_fourt
+	
+	addi $t4, $t0, 20
+	
+while_h3_fourt1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h3_fourt1
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 368
+	sw $t3, 0($t0)
+	sw $t1, 4($t0)
+	addi $t0, $t0, 8
+	
+	addi $t4, $t0, 48
+	
+while_h3_fifte:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h3_fifte
+	
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 40
+	
+while_h3_sixte:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h3_sixte
+	
+	addi $t0, $t0, 4
+	addi $t4, $t0, 40
+	
+while_h3_sevent:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h3_sevent
+	addi $t0, $t0, 372
+	sw $t3, 0($t0)
+	
+	jr $ra
+
+
+f_draw_health_2:
+	li $t0, HEALTH_BAR_POS
+	addi $t0, $t0, BASE_ADDRESS
+	
+	li $t1, 0xFF0000 #red
+	li $t2, 0xFFFFFF #white
+	li $t3, 0x000000 #black
+	
+	sw $t3, 8($t0)
+	sw $t3, 12($t0)
+	sw $t3, 20($t0)
+	sw $t3, 24($t0)
+	addi $t0, $t0, 512
+	
+	sw $t3, 4($t0)
+	sw $t2, 8($t0)
+	sw $t1, 12($t0)
+	sw $t3, 16($t0)
+	sw $t1, 20($t0)
+	sw $t1, 24($t0)
+	
+	addi $t0, $t0, 28 
+	addi $t4, $t0, 40 
+
+while_h2_one:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h2_one
+	
+	addi $t0, $t0, 4
+	addi $t4, $t0, 40
+
+while_h2_two:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h2_two
+	
+	addi $t0, $t0, 4
+	addi $t4, $t0, 40
+	
+while_h2_three:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h2_three
+	
+	addi $t0, $t0, 356
+	
+	sw $t3, 0($t0)
+	sw $t2, 4($t0)
+	
+	addi $t0, $t0, 8
+	addi $t4, $t0, 24
+	
+while_h2_four:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h2_four
+	
+	sw $t3, 0($t0)
+	sw $t2, 4($t0)
+	addi $t0, $t0, 8
+	addi $t4, $t0, 28
+	
+while_h2_five:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h2_five
+	
+	sw $t3, 0($t0)
+	sw $t2, 4($t0)
+	addi $t0, $t0, 8
+	
+	addi $t4, $t0, 16
+	
+while_h2_six:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h2_six
+
+	addi $t4, $t0, 20
+	
+while_h2_six1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h2_six1
+	
+	sw $t3, 0($t0)
+	sw $t2, 4($t0)
+	addi $t0, $t0, 8
+	
+	addi $t4, $t0, 16
+	
+while_h2_seven:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h2_seven
+	
+	addi $t4, $t0, 20
+	
+while_h2_seven1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h2_seven1
+	sw $t3, 0($t0)
+	
+	addi $t0, $t0, 360
+	sw $t3, -4($t0)
+	addi $t4, $t0, 28
+	
+while_h2_eight:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h2_eight
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 32
+	
+while_h2_nine:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h2_nine
+	
+	addi $t4, $t0, 88
+	
+while_h2_nine1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h2_nine1
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 364
+	
+	sw $t3, -4($t0)
+	addi $t4, $t0, 20
+	
+while_h2_ten:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h2_ten
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 36
+	
+while_h2_elev:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h2_elev
+	
+	addi $t4, $t0, 88
+	
+while_h2_elev1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h2_elev1
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 364
+	sw $t3, 0($t0)
+	sw $t1, 4($t0)
+	sw $t1, 8($t0)
+	sw $t1, 12($t0)
+	sw $t3, 16($t0)
+	addi $t0, $t0, 20
+	
+	addi $t4, $t0, 40
+	
+while_h2_twel:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h2_twel
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 20
+	
+while_h2_thirt:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h2_thirt
+	
+	addi $t4, $t0, 20
+	
+while_h2_thirt1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h2_thirt1
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 20
+	
+while_h2_fourt:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h2_fourt
+	
+	addi $t4, $t0, 20
+	
+while_h2_fourt1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h2_fourt1
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 368
+	sw $t3, 0($t0)
+	sw $t1, 4($t0)
+	addi $t0, $t0, 8
+	
+	addi $t4, $t0, 48
+	
+while_h2_fifte:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h2_fifte
+	
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 40
+	
+while_h2_sixte:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h2_sixte
+	
+	addi $t0, $t0, 4
+	addi $t4, $t0, 40
+	
+while_h2_sevent:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h2_sevent
+	addi $t0, $t0, 372
+	sw $t3, 0($t0)
+	
+	jr $ra	
+	
+	
+f_draw_health_1:
+	li $t0, HEALTH_BAR_POS
+	addi $t0, $t0, BASE_ADDRESS
+	
+	li $t1, 0xFF0000 #red
+	li $t2, 0xFFFFFF #white
+	li $t3, 0x000000 #black
+	
+	sw $t3, 8($t0)
+	sw $t3, 12($t0)
+	sw $t3, 20($t0)
+	sw $t3, 24($t0)
+	addi $t0, $t0, 512
+	
+	sw $t3, 4($t0)
+	sw $t2, 8($t0)
+	sw $t1, 12($t0)
+	sw $t3, 16($t0)
+	sw $t1, 20($t0)
+	sw $t1, 24($t0)
+	
+	addi $t0, $t0, 28 
+	addi $t4, $t0, 40 
+
+while_h1_one:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h1_one
+	
+	addi $t0, $t0, 4
+	addi $t4, $t0, 40
+
+while_h1_two:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h1_two
+	
+	addi $t0, $t0, 4
+	addi $t4, $t0, 40
+	
+while_h1_three:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h1_three
+	
+	addi $t0, $t0, 356
+	
+	sw $t3, 0($t0)
+	sw $t2, 4($t0)
+	
+	addi $t0, $t0, 8
+	addi $t4, $t0, 24
+	
+while_h1_four:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h1_four
+	
+	sw $t3, 0($t0)
+	sw $t2, 4($t0)
+	addi $t0, $t0, 8
+	addi $t4, $t0, 8
+	
+while_h1_five:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h1_five
+	addi $t4, $t0, 20
+	
+while_h1_five1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h1_five1
+	
+	
+	sw $t3, 0($t0)
+	sw $t2, 4($t0)
+	addi $t0, $t0, 8
+	
+	addi $t4, $t0, 16
+	
+while_h1_six:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h1_six
+
+	addi $t4, $t0, 20
+	
+while_h1_six1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h1_six1
+	
+	sw $t3, 0($t0)
+	sw $t2, 4($t0)
+	addi $t0, $t0, 8
+	
+	addi $t4, $t0, 16
+	
+while_h1_seven:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h1_seven
+	
+	addi $t4, $t0, 20
+	
+while_h1_seven1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h1_seven1
+	sw $t3, 0($t0)
+	
+	addi $t0, $t0, 360
+	sw $t3, -4($t0)
+	addi $t4, $t0, 28
+	
+while_h1_eight:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h1_eight
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 12
+	
+while_h1_nine:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h1_nine
+	
+	addi $t4, $t0, 108
+	
+while_h1_nine1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h1_nine1
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 364
+	
+	sw $t3, -4($t0)
+	addi $t4, $t0, 20
+	
+while_h1_ten:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h1_ten
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 16
+	
+while_h1_elev:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h1_elev
+	
+	addi $t4, $t0, 108
+	
+while_h1_elev1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h1_elev1
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 364
+	sw $t3, 0($t0)
+	sw $t1, 4($t0)
+	sw $t1, 8($t0)
+	sw $t1, 12($t0)
+	sw $t3, 16($t0)
+	addi $t0, $t0, 20
+	
+	addi $t4, $t0, 20
+	
+while_h1_twel:
+	sw $t1, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h1_twel
+	
+	addi $t4, $t0, 20
+	
+while_h1_twel1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h1_twel1
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 20
+	
+while_h1_thirt:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h1_thirt
+	
+	addi $t4, $t0, 20
+	
+while_h1_thirt1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h1_thirt1
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 20
+	
+while_h1_fourt:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h1_fourt
+	
+	addi $t4, $t0, 20
+	
+while_h1_fourt1:
+	sw $t2, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h1_fourt1
+	
+	sw $t3, 0($t0)
+	addi $t0, $t0, 368
+	sw $t3, 0($t0)
+	sw $t1, 4($t0)
+	addi $t0, $t0, 8
+	
+	addi $t4, $t0, 48
+	
+while_h1_fifte:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h1_fifte
+	
+	addi $t0, $t0, 4
+	
+	addi $t4, $t0, 40
+	
+while_h1_sixte:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h1_sixte
+	
+	addi $t0, $t0, 4
+	addi $t4, $t0, 40
+	
+while_h1_sevent:
+	sw $t3, 0($t0)
+	addi $t0, $t0, 4
+	bne $t0, $t4, while_h1_sevent
+	addi $t0, $t0, 372
+	sw $t3, 0($t0)
+	
+	jr $ra		
