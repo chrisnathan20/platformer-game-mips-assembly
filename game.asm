@@ -69,7 +69,9 @@
 
     sprite_walk_status: .word 0 #used to toggle between sprites
     
-    moving_enemy_pos: .word 1
+    moving_bird_sprite: .word 3
+    
+    shooting_bird_sprite: .word 1
 
 .text
 
@@ -435,6 +437,15 @@ main_no_platform:
     sw $t1, 0($t0)
 	
 end_main_while:
+	
+	jal f_egg_check
+	
+	li $a0, 19312
+	jal f_draw_bird_moving
+	
+	li $a0, 33832
+    jal f_draw_bird_shooting
+
 	li $v0 32
 	li $a0 40
 	syscall
@@ -695,6 +706,72 @@ no_damage:
 yes_damage:
 	li $v0, -1
 	jr $ra
+
+f_egg_check:
+	#v0 is set to -1 if there is damage
+	
+	la $t0, char_status
+    lw $t1, 0($t0)
+    
+    la $t0, char_pos
+    lw $t0, 0($t0)
+    
+    addi $t0, $t0, BASE_ADDRESS
+	
+if_egg_rw:
+	bne $t1, 1, if_egg_lw
+
+	addi $t0, $t0, -3084
+	j start_check_damage
+	
+if_egg_lw:
+	addi $t0, $t0, -3088
+	
+start_egg_damage:
+	addi $t2, $t0, 32
+	
+top_egg:
+	lw $t3, 0($t0)
+	beq $t3, 0xCDC199, yes_egg
+	beq $t3, 0xf4ebcb, yes_egg
+	addi $t0, $t0, 4
+	bne $t0, $t2, top_egg
+	
+	addi $t0, $t0, -4
+	addi $t2, $t0, 5120
+	
+right_egg:
+	lw $t3, 0($t0)
+	beq $t3, 0xCDC199, yes_egg
+	beq $t3, 0xf4ebcb, yes_egg
+	addi $t0, $t0, 512
+	bne $t0, $t2, right_egg
+	
+	addi $t0, $t0, -512
+	addi $t2, $t0, -32
+	
+bottom_egg:
+	lw $t3, 0($t0)
+	beq $t3, 0xCDC199, yes_egg
+	beq $t3, 0xf4ebcb, yes_egg
+	addi $t0, $t0, -4
+	bne $t0, $t2, bottom_egg
+	
+	addi $t0, $t0, 4
+	addi $t2, $t0, -5120
+	
+left_egg:
+	lw $t3, 0($t0)
+	beq $t3, 0xCDC199, yes_egg
+	beq $t3, 0xf4ebcb, yes_egg
+	addi $t0, $t0, -512
+	bne $t0, $t2, left_egg
+
+no_egg:
+	jr $ra	
+	
+yes_egg:
+	j END  #CHANGE THIS TO YOU WIN SCREEN
 
 ### DRAWING FUNCTIONS ###
 
@@ -3627,6 +3704,46 @@ draw_bird_lone:
 	sw $t2, 8($t0)
 	
 	jr $ra
+	
+erase_bird_lone:
+	#position of bird passed thru register $a0
+	addi $t0, $a0, BASE_ADDRESS
+	li $t1, 0xFFFFFF
+	li $t2, 0xFFFFFF
+	
+	addi $t0, $t0, -1536
+	
+	sw $t1, 0($t0)
+	
+	addi $t0, $t0, 512
+	sw $t1, 0($t0)
+	sw $t1, 4($t0)
+	sw $t1, -8($t0)
+	
+	addi $t0, $t0, 512
+	sw $t1, 0($t0)
+	sw $t1, 4($t0)
+	sw $t1, 8($t0)
+	sw $t1, -8($t0)
+	sw $t1, -12($t0)
+	
+	addi $t0, $t0, 512
+	sw $t1, 0($t0)
+	sw $t1, 4($t0)
+	sw $t1, 8($t0)
+	sw $t1, 12($t0)
+	sw $t1, 16($t0)
+	sw $t1, -4($t0)
+	sw $t1, -8($t0)
+	sw $t1, -12($t0)
+	sw $t1, -16($t0)
+	
+	addi $t0, $t0, 512
+	sw $t2, 0($t0)
+	sw $t2, 4($t0)
+	sw $t2, 8($t0)
+	
+	jr $ra
 			
 draw_bird_ltwo:
 	#position of bird passed thru register $a0
@@ -3670,11 +3787,177 @@ draw_bird_ltwo:
 	
 	jr $ra
 	
+erase_bird_ltwo:
+	#position of bird passed thru register $a0
+	addi $t0, $a0, BASE_ADDRESS
+	li $t1, 0xFFFFFF
+	li $t2, 0xFFFFFF
+	
+	addi $t0, $t0, -1024
+	
+	sw $t1, -8($t0)	
+	
+	addi $t0, $t0, 512
+	sw $t1, 0($t0)
+	sw $t1, 4($t0)
+	sw $t1, 8($t0)
+	sw $t1, -8($t0)	
+	sw $t1, -12($t0)
+	
+	addi $t0, $t0, 512
+	sw $t1, 0($t0)
+	sw $t1, 4($t0)
+	sw $t1, 8($t0)
+	sw $t1, 12($t0)
+	sw $t1, 16($t0)
+	sw $t1, -4($t0)
+	sw $t1, -8($t0)
+	sw $t1, -12($t0)
+	sw $t1, -16($t0)	
+	
+	addi $t0, $t0, 512
+	sw $t2, 0($t0)
+	sw $t1, 4($t0)
+	sw $t1, 8($t0)
+	
+	addi $t0, $t0, 512
+	sw $t2, 4($t0)
+	sw $t1, 8($t0)
+			
+	addi $t0, $t0, 512
+	sw $t2, 8($t0)
+	
+	jr $ra
+
+f_draw_bird_moving:
+	#pos of bird passed thru a0
+    addi $sp, $sp, -4
+    sw $ra, 0($sp)
+    
+	la $t0, moving_bird_sprite
+    lw $t1, 0($t0)
+	
+if_draw_lone:
+    bge $t1, 6, if_erase_lone_draw_ltwo
+    jal draw_bird_lone
+    j end_f_draw_bird_moving
+
+if_erase_lone_draw_ltwo:
+	bne $t1, 6, if_draw_ltwo
+    jal erase_bird_lone
+    jal draw_bird_ltwo
+    j end_f_draw_bird_moving
+
+if_draw_ltwo:
+    bge $t1, 12, if_erase_ltwo_draw_lone
+    jal draw_bird_ltwo
+    j end_f_draw_bird_moving
+
+if_erase_ltwo_draw_lone:
+    jal erase_bird_ltwo
+    jal draw_bird_lone
+    j end_f_draw_bird_moving
+
+end_f_draw_bird_moving:
+	la $t0, moving_bird_sprite
+    lw $t1, 0($t0)
+	addi $t1, $t1, 1
+	bne $t1, 13, not_sprite_limit_mb
+	li $t1, 1
+not_sprite_limit_mb:
+	sw $t1, 0($t0)
+    lw $ra, 0($sp)
+    addi $sp, $sp, 4
+    jr $ra
+    
+f_draw_bird_shooting:
+	#pos of bird passed thru a0
+    addi $sp, $sp, -4
+    sw $ra, 0($sp)
+    
+	la $t0, shooting_bird_sprite
+    lw $t1, 0($t0)
+	
+if_draw_rone:
+    bge $t1, 5, if_erase_rone_draw_rtwo
+    jal draw_bird_rone
+    j end_f_draw_bird_shooting
+
+if_erase_rone_draw_rtwo:
+	bne $t1, 5, if_draw_rtwo
+    jal erase_bird_rone
+    jal draw_bird_rtwo
+    j end_f_draw_bird_shooting
+
+if_draw_rtwo:
+    bge $t1, 10, if_erase_rtwo_draw_rone
+    jal draw_bird_rtwo
+    j end_f_draw_bird_shooting
+
+if_erase_rtwo_draw_rone:
+    jal erase_bird_rtwo
+    jal draw_bird_rone
+    j end_f_draw_bird_shooting
+
+end_f_draw_bird_shooting:
+	la $t0, shooting_bird_sprite
+    lw $t1, 0($t0)
+	addi $t1, $t1, 1
+	bne $t1, 11, not_sprite_limit_sb
+	li $t1, 1
+not_sprite_limit_sb:
+	sw $t1, 0($t0)
+    lw $ra, 0($sp)
+    addi $sp, $sp, 4
+    jr $ra
+    
+
 draw_bird_rone:
 	#position of bird passed thru register $a0
 	addi $t0, $a0, BASE_ADDRESS
 	li $t1, UPPERBODY_ORANGE
 	li $t2, LOWERBODY_ORANGE
+	
+	addi $t0, $t0, -1536
+	
+	sw $t1, 0($t0)
+	
+	addi $t0, $t0, 512
+	sw $t1, 0($t0)
+	sw $t1, -4($t0)
+	sw $t1, 8($t0)
+	
+	addi $t0, $t0, 512
+	sw $t1, 0($t0)
+	sw $t1, -4($t0)
+	sw $t1, -8($t0)
+	sw $t1, 8($t0)
+	sw $t1, 12($t0)
+	
+	addi $t0, $t0, 512
+	sw $t1, 0($t0)
+	sw $t1, 4($t0)
+	sw $t1, 8($t0)
+	sw $t1, 12($t0)
+	sw $t1, 16($t0)
+	sw $t1, -4($t0)
+	sw $t1, -8($t0)
+	sw $t1, -12($t0)
+	sw $t1, -16($t0)
+	
+	addi $t0, $t0, 512
+	sw $t2, 0($t0)
+	sw $t2, -4($t0)
+	sw $t2, -8($t0)
+	
+	jr $ra
+	
+	
+erase_bird_rone:
+	#position of bird passed thru register $a0
+	addi $t0, $a0, BASE_ADDRESS
+	li $t1, 0xFFFFFF
+	li $t2, 0xFFFFFF
 	
 	addi $t0, $t0, -1536
 	
@@ -3751,6 +4034,50 @@ draw_bird_rtwo:
 	sw $t2, -8($t0)
 	
 	jr $ra
+	
+	
+erase_bird_rtwo:
+	#position of bird passed thru register $a0
+	addi $t0, $a0, BASE_ADDRESS
+	li $t1, 0xFFFFFF
+	li $t2, 0xFFFFFF
+	
+	addi $t0, $t0, -1024
+	
+	sw $t1, 8($t0)	
+	
+	addi $t0, $t0, 512
+	sw $t1, 0($t0)
+	sw $t1, -4($t0)
+	sw $t1, -8($t0)
+	sw $t1, 8($t0)	
+	sw $t1, 12($t0)
+	
+	addi $t0, $t0, 512
+	sw $t1, 0($t0)
+	sw $t1, 4($t0)
+	sw $t1, 8($t0)
+	sw $t1, 12($t0)
+	sw $t1, 16($t0)
+	sw $t1, -4($t0)
+	sw $t1, -8($t0)
+	sw $t1, -12($t0)
+	sw $t1, -16($t0)	
+	
+	addi $t0, $t0, 512
+	sw $t2, 0($t0)
+	sw $t1, -4($t0)
+	sw $t1, -8($t0)
+	
+	addi $t0, $t0, 512
+	sw $t2, -4($t0)
+	sw $t1, -8($t0)
+			
+	addi $t0, $t0, 512
+	sw $t2, -8($t0)
+	
+	jr $ra
+	
 	
 f_draw_start_menu:
 	li $t0, START_MENU_POS
@@ -4314,12 +4641,7 @@ f_draw_level:
     
     li $a0, 64812
     jal f_draw_egg
-    
-    li $a0, 33832
-    jal draw_bird_rone
-    
-    li $a0, 19312
-    jal draw_bird_ltwo
+     
     
     li $a0, 61952
     jal f_draw_plat
