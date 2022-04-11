@@ -6,23 +6,28 @@
 # Student: Christopher Nathanael, 1006853870, nathana6, Christopher Nathanael 
 # 
 # Bitmap Display Configuration: 
-# - Unit width in pixels: 4 (update this as needed)  
-# - Unit height in pixels: 4 (update this as needed) 
-# - Display width in pixels: 512 (update this as needed) 
-# - Display height in pixels: 512 (update this as needed) 
+# - Unit width in pixels: 4 
+# - Unit height in pixels: 4
+# - Display width in pixels: 512
+# - Display height in pixels: 512
 # - Base Address for Display: 0x10008000 ($gp) 
 # 
 # Which milestones have been reached in this submission? 
 # (See the assignment handout for descriptions of the milestones) 
-# - Milestone 1/2/3 (choose the one the applies) 
+# - Milestone 1,2 and 3
 # 
 # Which approved features have been implemented for milestone 3? 
 # (See the assignment handout for the list of additional features) 
-# 1. (fill in the feature, if any) 
-# 2. (fill in the feature, if any) 
-# 3. (fill in the feature, if any) 
-# ... (add more if necessary) 
-# 
+# 1. A. Health/Score [2 marks]
+# 2. B. Fail condition [1 mark]
+# 3. C. Win condition [1 mark]
+# 4. D.  Moving objects [2 marks]
+# 5. E. Moving platforms [2 marks]
+# 6. I. Enemies shoot back! [2 marks]
+# 7. K. Double jump [1 mark]
+# 8. M.  Animated sprites [2 marks]
+# 9. N.  Start menu [1 mark]
+#
 # Link to video demonstration for final submission: 
 # - (insert YouTube / MyMedia / other URL here). Make sure we can view it! 
 # 
@@ -30,8 +35,10 @@
 # - yes, and please share this project github link as well! 
 # 
 # Any additional information that the TA needs to know: 
-# - (write here, if any) 
-# 
+# - To move left, use either A or J
+# - To move right, use either D or L
+# - To move continuously in one direction, reccommended to alternatively press the 2 keys
+# - To jump/double jump, use either W, I or SPACEBAR
 ##################################################################### 
 
 .eqv  BASE_ADDRESS  0x10008000
