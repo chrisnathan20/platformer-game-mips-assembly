@@ -21,12 +21,12 @@
 # 1. A. Health/Score [2 marks]
 # 2. B. Fail condition [1 mark]
 # 3. C. Win condition [1 mark]
-# 4. D.  Moving objects [2 marks]
+# 4. D. Moving objects [2 marks]
 # 5. E. Moving platforms [2 marks]
 # 6. I. Enemies shoot back! [2 marks]
 # 7. K. Double jump [1 mark]
-# 8. M.  Animated sprites [2 marks]
-# 9. N.  Start menu [1 mark]
+# 8. M. Animated sprites [2 marks]
+# 9. N. Start menu [1 mark]
 #
 # Link to video demonstration for final submission: 
 # - (insert YouTube / MyMedia / other URL here). Make sure we can view it! 
@@ -46,7 +46,6 @@
 .eqv  HEALTH_BAR_POS 1032
 .eqv  START_MENU_POS 6700
 .eqv  CHAR_START_POS 50200
-.eqv  FIXED_ENEMY_POS
 
 # Harmful colors (each deal -1 damage)
 .eqv CACTUS_GREEN 0x2B4D1B
